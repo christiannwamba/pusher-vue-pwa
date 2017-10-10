@@ -20,6 +20,7 @@
 </template>
 
 <script>
+require('../node_modules/bulma/css/bulma.css');
 import pusher from 'pusher-js';
 
 import Status from '@/components/Status';
