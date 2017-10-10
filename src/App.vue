@@ -1,5 +1,9 @@
 <template>
   <section class="hero is-danger is-fullheight">
+    <div class="notification is-warning" v-show="!connectivityStatus">
+      <button class="delete"></button>
+      {{connectivityText}}
+    </div>
     <div class="hero-body">
       <div class="container">
         <div class="level">
@@ -24,7 +28,9 @@ export default {
   data() {
     return {
       statusText: 'In the Oven',
-      progress: 0
+      progress: 0,
+      connectivityText: '',
+      connectivityStatus: true,
     }
   },
   created() {
@@ -40,7 +46,16 @@ export default {
       this.progress = data.progress;
       // this.$emit('status', data);
     });
-    
+
+    window.addEventListener('offline', () => {
+      this.connectivityStatus = false;
+      this.connectivityText = 'Your seem to be offline. Connect to see latest order status';
+    })
+
+    window.addEventListener('online', () => {
+      console.log('asd')
+      this.connectivityStatus = true;
+    })
   },
   components: {
     'status': Status
